@@ -28,29 +28,36 @@ public class Top10 {
 	}
 
 	public static void read(String path) {
+		
+		boolean check;
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
 			StringBuilder stringBuilder = new StringBuilder();
-			String currentString;
+			String currentString = reader.readLine();
+			stringBuilder.append(currentString);
+			stringBuilder.append("\n");
+			String[] str = new String[2];
+			str = currentString.split("password ", 2);
+			passwords.add(new Password(str[1]));
+
 			while ((currentString = reader.readLine()) != null) {
 				stringBuilder.append(currentString);
 				stringBuilder.append("\n");
-				String[] str = new String[2];
+				str = new String[2];
 				str = currentString.split("password ", 2);
-				System.out.println(str[1]);
-				for (int i = 0; i < passwords.size(); i++) {//не стартует, т.к. нет первого элемента
-					if (passwords.get(i).getPassword() == str[1]) {
+				check = true;
+				for (int i = 0; i < passwords.size(); i++) {
+					if (passwords.get(i).getPassword().equals(str[1])) {
 						passwords.get(i).increaseCounter();
-					} else {
-						passwords.add(new Password(str[1]));
-						System.out.println("+1");
+						check = false;
 					}
 				}
-
+				if (check) {
+					passwords.add(new Password(str[1]));
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-
 		}
 	}
 

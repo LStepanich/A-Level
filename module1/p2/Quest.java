@@ -29,7 +29,11 @@ public class Quest {
 
 			} else {
 				System.out.println("GJ<TLA!!!");
+				scan.close();
 				break;
+			}
+			if (k==0){
+				System.out.println("Игра окончена, не угадали");
 			}
 		}
 	}
